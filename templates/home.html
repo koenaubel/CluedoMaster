@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-sm">
+            <form method="post">
+              <fieldset>
+                <legend>Please enter the player's names.</legend>
+                <div class="form-group">
+                    <label>Start with your own name</label>
+                    <input class="form-control" name="player1" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" name="player2" placeholder="Enter name of player 2">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" name="player3" placeholder="Enter name of player 3">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" name="player4" placeholder="Enter name of player 4">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" name="player5" placeholder="Enter name of player 5">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" name="player6" placeholder="Enter name of player 6">
+                </div>
+                </fieldset>
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <link rel ="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <title>CluedoMaster</title>
+</head>
+
+{% set nav_bar = [('cards','Cards'),('turns','Turns'),('about','About')] %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='cluedo.jpeg') }}" height="40px">
+      CluedoMaster
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+        {% for url, nav_text in nav_bar %}
+            <li class="nav-item {% if active_page == url %}active{% endif %}">
+                <a class="nav-link" href="{{ url_for(url) }}">{{ nav_text }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <a class="btn btn-warning my-2 my-sm-0" href="{{ url_for('home') }}">Start new game</a>
+    </form>
+  </div>
+</nav>
+
+{% block content %}{% endblock %}

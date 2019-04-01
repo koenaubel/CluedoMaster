@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% set active_page = "cards" %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-sm">
+            <form>
+              <fieldset>
+                <legend>New turn.</legend>
+                <div class="form-group">
+                  <label>Location</label>
+                  <select class="form-control" id="location">
+                    <option>Ballroom</option>
+                    <option>Billiard Room</option>
+                    <option>Conservatory</option>
+                    <option>Dining Room</option>
+                    <option>Hall</option>
+                    <option>Kitchen</option>
+                    <option>Library</option>
+                    <option>Lounge</option>
+                    <option>Study</option>
+                  </select>
+                </div>
+                <div class="form-group" id="suspect">
+                  <label>Suspect</label>
+                  <select class="form-control">
+                    <option>Green</option>
+                    <option>Mustard</option>
+                    <option>Peacock</option>
+                    <option>Plum</option>
+                    <option>Scarlet</option>
+                    <option>White</option>
+                  </select>
+                </div>
+              </fieldset>
+                <div class="form-group" id="weapon">
+                  <label>Weapon</label>
+                  <select class="form-control">
+                    <option>Candlestick</option>
+                    <option>Knife</option>
+                    <option>Lead Pipe</option>
+                    <option>Revolver</option>
+                    <option>Rope</option>
+                    <option>Wrench</option>
+                  </select>
+                </div>
+                <div class="form-group" id="playerturn">
+                  <label>Player</label>
+                  <select class="form-control">
+                    <option>Name 1</option>
+                    <option>Name 2</option>
+                    <option>Name 3</option>
+                    <option>Name 4</option>
+                    <option>Name 5</option>
+                    <option>Name 6</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Ok</button
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
