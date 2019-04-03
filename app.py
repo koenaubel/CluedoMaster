@@ -34,7 +34,7 @@ def turns():
 
 @app.route('/cards')
 def cards():
-    return render_template('cards.html')
+    return render_template('cards.html', locations=c.locations(),suspects=c.suspects(), weapons=c.weapons())
 
 
 @app.route('/about')

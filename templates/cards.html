@@ -20,49 +20,34 @@
                     <div class="form-group">
                         <label>Location</label>
                         <select class="form-control" id="location">
-                            <option>Ballroom</option>
-                            <option>Billiard Room</option>
-                            <option>Conservatory</option>
-                            <option>Dining Room</option>
-                            <option>Hall</option>
-                            <option>Kitchen</option>
-                            <option>Library</option>
-                            <option>Lounge</option>
-                            <option>Study</option>
+                            {% for location in locations %}
+                            <option>{{ location }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-group" id="suspect">
                         <label>Suspect</label>
                         <select class="form-control">
-                            <option>Green</option>
-                            <option>Mustard</option>
-                            <option>Peacock</option>
-                            <option>Plum</option>
-                            <option>Scarlet</option>
-                            <option>White</option>
+                            {% for suspect in suspects %}
+                            <option>{{ suspect }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </fieldset>
                 <div class="form-group" id="weapon">
                     <label>Weapon</label>
                     <select class="form-control">
-                        <option>Candlestick</option>
-                        <option>Knife</option>
-                        <option>Lead Pipe</option>
-                        <option>Revolver</option>
-                        <option>Rope</option>
-                        <option>Wrench</option>
+                        {% for weapon in weapons %}
+                            <option>{{ weapon }}</option>
+                            {% endfor %}
                     </select>
                 </div>
                 <div class="form-group" id="playerturn">
                     <label>Player</label>
                     <select class="form-control">
-                        <option>Name 1</option>
-                        <option>Name 2</option>
-                        <option>Name 3</option>
-                        <option>Name 4</option>
-                        <option>Name 5</option>
-                        <option>Name 6</option>
+                        {% for player in session['players'] %}
+                            <option>{{ player }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Ok</button
