@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}r
+
+{% block content %}
+<div class="container mt-3">
+    <form method="post">
+        <div class="row">
+            <div class="col-sm">
+                <fieldset class="form-group">
+                    <legend>Locations</legend>
+                    {% for location in locations %}
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" name="locations" type="checkbox" value="">
+                                {{ location }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                 </fieldset>
+            </div>
+            <div class="col-sm">
+                <fieldset class="form-group">
+                    <legend>Suspects</legend>
+                    {% for suspect in suspects %}
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" name="suspect" type="checkbox" value="">
+                                {{ suspect }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                 </fieldset>
+            </div>
+            <div class="col-sm">
+                <fieldset class="form-group">
+                    <legend>Weapons</legend>
+                    {% for weapon in weapons %}
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" name="weapons" type="checkbox" value="">
+                                {{ weapon }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                 </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-primary">Start game</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
