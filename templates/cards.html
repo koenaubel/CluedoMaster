@@ -4,13 +4,42 @@
 {% block content %}
 <div class="container mt-3">
     <div class="row">
-        <ul>
-            {% for card in session['cards_in_hand'] %}
-                <li>
-                    {{ card }}
+        <div class="col-sm">
+            <ul class="list-group" id="locations"><h3>Locations</h3>
+                {% for location in locations %}
+                <li class="d-flex flex-row list-group-item list-group-item-action {% if location in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
+                    <span class="mr-auto">{{ location }}</span>
+                    {% if location in session['cards_in_hand'] %}
+                        <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+                    {% endif %}
                 </li>
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm">
+            <ul class="list-group" id="suspects"><h3>Suspects</h3>
+                {% for suspect in suspects %}
+                <li class="d-flex flex-row list-group-item {% if suspect in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
+                    <span class="mr-auto">{{ suspect }}</span>
+                    {% if suspect in session['cards_in_hand'] %}
+                        <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm">
+            <ul class="list-group" id="weapons"><h3>Weapons</h3>
+                {% for weapon in weapons %}
+                <li class="d-flex flex-row list-group-item {% if weapon in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
+                    <span class="mr-auto">{{ weapon }}</span>
+                    {% if weapon in session['cards_in_hand'] %}
+                        <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
     <div class="row">
         <div class="col-sm">
@@ -55,4 +84,13 @@
         </div>
     </div>
 </div>
+<script>
+$(".list-group-item").click(function() {
+    isActive = $(this).hasClass("active")
+    if (isActive) {$(this).removeClass("active")}
+    else {
+    $(this).parent().children().removeClass("active");
+    $(this).addClass("active")}
+});
+</script>
 {% endblock %}
