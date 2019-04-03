@@ -11,7 +11,7 @@
                     {% for location in locations %}
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" name="locations" type="checkbox" value="">
+                                <input class="form-check-input" name="cards_in_hand" type="checkbox" value="{{ location }}">
                                 {{ location }}
                             </label>
                         </div>
@@ -24,7 +24,7 @@
                     {% for suspect in suspects %}
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" name="suspect" type="checkbox" value="">
+                                <input class="form-check-input" name="cards_in_hand" type="checkbox" value="{{ suspect }}">
                                 {{ suspect }}
                             </label>
                         </div>
@@ -37,7 +37,7 @@
                     {% for weapon in weapons %}
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" name="weapons" type="checkbox" value="">
+                                <input class="form-check-input" name="cards_in_hand" type="checkbox" value="{{ weapon }}">
                                 {{ weapon }}
                             </label>
                         </div>
