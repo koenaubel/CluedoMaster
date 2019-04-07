@@ -19,7 +19,7 @@
         <div class="col-sm">
             <ul class="list-group" id="suspects"><h3>Suspects</h3>
                 {% for suspect in suspects %}
-                <li class="d-flex flex-row list-group-item {% if suspect in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
+                <li class="d-flex flex-row list-group-item list-group-item-action {% if suspect in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
                     <span class="mr-auto">{{ suspect }}</span>
                     {% if suspect in session['cards_in_hand'] %}
                         <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
@@ -31,7 +31,7 @@
         <div class="col-sm">
             <ul class="list-group" id="weapons"><h3>Weapons</h3>
                 {% for weapon in weapons %}
-                <li class="d-flex flex-row list-group-item {% if weapon in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
+                <li class="d-flex flex-row list-group-item list-group-item-action {% if weapon in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
                     <span class="mr-auto">{{ weapon }}</span>
                     {% if weapon in session['cards_in_hand'] %}
                         <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
@@ -41,49 +41,61 @@
             </ul>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm">
-            <form>
-                <fieldset>
-                    <legend>New turn.</legend>
-                    <div class="form-group">
-                        <label>Location</label>
-                        <select class="form-control" id="location">
-                            {% for location in locations %}
-                            <option>{{ location }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group" id="suspect">
-                        <label>Suspect</label>
+</div>
+
+<div class="modal fade" id="newTurnModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">New suggestion</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <fieldset>
+                        <div class="form-group" id="playerturn">
+                        <label>Player</label>
                         <select class="form-control">
-                            {% for suspect in suspects %}
-                            <option>{{ suspect }}</option>
+                            {% for player in session['players'] %}
+                                <option>{{ player }}</option>
                             {% endfor %}
                         </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <select class="form-control" id="location">
+                                {% for location in locations %}
+                                <option>{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group" id="suspect">
+                            <label>Suspect</label>
+                            <select class="form-control">
+                                {% for suspect in suspects %}
+                                <option>{{ suspect }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </fieldset>
+                    <div class="form-group" id="weapon">
+                        <label>Weapon</label>
+                        <select class="form-control">
+                            {% for weapon in weapons %}
+                                <option>{{ weapon }}</option>
+                                {% endfor %}
+                        </select>
                     </div>
-                </fieldset>
-                <div class="form-group" id="weapon">
-                    <label>Weapon</label>
-                    <select class="form-control">
-                        {% for weapon in weapons %}
-                            <option>{{ weapon }}</option>
-                            {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group" id="playerturn">
-                    <label>Player</label>
-                    <select class="form-control">
-                        {% for player in session['players'] %}
-                            <option>{{ player }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Ok</button
-            </form>
+                    <button type="submit" class="btn btn-primary float-right">Submit suggestion</button
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+
 <script>
 $(".list-group-item").click(function() {
     isActive = $(this).hasClass("active")
