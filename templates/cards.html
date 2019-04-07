@@ -54,20 +54,20 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <fieldset>
+                    <div id="suggestion">
                         <div class="form-group" id="playerturn">
-                        <label>Player</label>
-                        <select class="form-control">
-                            {% for player in session['players'] %}
-                                <option>{{ player }}</option>
-                            {% endfor %}
-                        </select>
+                            <label>Player</label>
+                            <select class="form-control">
+                                {% for player in session['players'] %}
+                                    <option>{{ player }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="location">
                             <label>Location</label>
-                            <select class="form-control" id="location">
+                            <select class="form-control">
                                 {% for location in locations %}
-                                <option>{{ location }}</option>
+                                    <option>{{ location }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -75,20 +75,40 @@
                             <label>Suspect</label>
                             <select class="form-control">
                                 {% for suspect in suspects %}
-                                <option>{{ suspect }}</option>
+                                    <option>{{ suspect }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                    </fieldset>
-                    <div class="form-group" id="weapon">
-                        <label>Weapon</label>
-                        <select class="form-control">
-                            {% for weapon in weapons %}
-                                <option>{{ weapon }}</option>
+                        <div class="form-group" id="weapon">
+                            <label>Weapon</label>
+                            <select class="form-control">
+                                {% for weapon in weapons %}
+                                    <option>{{ weapon }}</option>
                                 {% endfor %}
-                        </select>
+                            </select>
+                        </div>
+                        <button id="submitSuggestion" class="btn btn-primary float-right">Submit suggestion</button>
                     </div>
-                    <button type="submit" class="btn btn-primary float-right">Submit suggestion</button
+                    <div id="showCard" class="hideMe">
+                        <div class="form-group">
+                            <label>Which player showed a card?</label>
+                            <select class="form-control" id="showPlayer">
+                                <option>Nobody</option>
+                                {% for player in session['players'] %}
+                                    <option>{{ player }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group hideMe" id="showedCard">
+                            <label>Which card did you show?</label>
+                            <select class="form-control">
+                                {% for card in session['cards_in_hand'] %}
+                                    <option>{{ card }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" id="submitTurn" class="btn btn-primary float-right">Submit turn</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -104,5 +124,17 @@ $(".list-group-item").click(function() {
     $(this).parent().children().removeClass("active");
     $(this).addClass("active")}
 });
+
+$("#submitSuggestion").click(function (clickEvent) {
+    clickEvent.preventDefault();
+    $("#suggestion").hide();
+    $("#showCard").show();
+});
+
+$("#showPlayer").change(function() {
+    player = $("#showPlayer").children("option").filter(":selected").text();
+    if (player == "{{ session['players'][0] }}") {$("#showedCard").show()};
+});
+
 </script>
 {% endblock %}
