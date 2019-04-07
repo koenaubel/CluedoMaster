@@ -3,11 +3,17 @@
 
 {% block content %}
 <div class="container mt-3">
+    <div class="alert alert-info" role="alert">
+        Enter the player's names clockwise, starting with your own name.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="row">
         <div class="col-sm">
             <form method="post">
                 <fieldset>
-                    <legend>Please enter the player's names.</legend>
+                    <legend>Player's names</legend>
                     {% for i in range(1,7) %}
                         <div class="form-group">
                             <input class="form-control" name="player" placeholder="Enter {% if i == 1 %}your name{% else %}name of player {{ i }}{% endif %}">

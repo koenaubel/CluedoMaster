@@ -1,8 +1,14 @@
 {% extends "base.html" %}
-{% set active_page = "home" %}r
+{% set active_page = "home" %}
 
 {% block content %}
 <div class="container mt-3">
+    <div class="alert alert-info" role="alert">
+        Select the cards you have in your hand.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <form method="post">
         <div class="row">
             <div class="col-sm">
@@ -46,11 +52,51 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-8"></div>
+            <div class="col-sm-8">
+                <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to players</a>
+            </div>
             <div class="col-sm-4">
                 <button type="submit" class="btn btn-primary">Start game</button>
             </div>
         </div>
     </form>
+    <div class="row hideMe">
+        <div class="col-sm">
+            <ul class="list-group" id="locations"><h3>Locations</h3>
+                {% for location in locations %}
+                <li class="d-flex flex-row list-group-item list-group-item-action justify-content-end align-items-center">
+                    {{ location }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm">
+            <ul class="list-group" id="suspects"><h3>Suspects</h3>
+                {% for suspect in suspects %}
+                <li class="d-flex flex-row list-group-item list-group-item-action justify-content-end align-items-center">
+                    {{ suspect }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm">
+            <ul class="list-group" id="weapons"><h3>Weapons</h3>
+                {% for weapon in weapons %}
+                <li class="d-flex flex-row list-group-item list-group-item-action justify-content-end align-items-center">
+                    {{ weapon }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
+
+<script>
+$(".list-group-item").click(function() {
+    isActive = $(this).hasClass("active")
+    if (isActive) {$(this).removeClass("active")}
+    else {$(this).addClass("active")}
+});
+</script>
+
 {% endblock %}

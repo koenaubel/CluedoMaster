@@ -28,6 +28,7 @@
             </li>
         {% endfor %}
     </ul>
+    {% if active_page != 'home' %}
     <form class="form-inline my-2 my-lg-0">
         <button type="button" class="btn btn-secondary mr-4" data-toggle="modal" data-target="#newTurnModal">
             New suggestion
@@ -37,6 +38,7 @@
         </button>
         <a class="btn btn-warning my-2 my-sm-0 max-4" href="{{ url_for('home') }}">Start new game</a>
     </form>
+    {% endif %}
   </div>
 </nav>
 

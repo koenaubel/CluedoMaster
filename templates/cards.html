@@ -156,7 +156,7 @@
                         <button id="submitAccusation" class="btn btn-primary float-right">Submit suggestion</button>
                     </div>
                     <div id="verify" class="hideMe">
-                        <h5>Was is right?</h5>
+                        <h5>Was it right?</h5>
                         <div class="d-flex justify-content-end">
                             <button id="correct" class="btn btn-success mr-3">Yes!</button>
                             <button id="incorret" class="btn btn-danger">Uuhhhh...</button>
@@ -169,14 +169,6 @@
 </div>
 
 <script>
-<!--$(".list-group-item").click(function() {-->
-<!--    isActive = $(this).hasClass("active")-->
-<!--    if (isActive) {$(this).removeClass("active")}-->
-<!--    else {-->
-<!--    $(this).parent().children().removeClass("active");-->
-<!--    $(this).addClass("active")}-->
-<!--});-->
-
 $("#submitSuggestion").click(function (clickEvent) {
     clickEvent.preventDefault();
     turnPlayerName = $("[name=turn_player]").val();
@@ -192,9 +184,6 @@ $("[name=show_player]").change(function() {
     suspectAsked = $("[name=suspect_asked]").val();
     weaponAsked = $("[name=weapon_asked]").val();
     cardsInHand = "{{ session['cards_in_hand'] }}";
-    console.log(cardsInHand.includes(locationAsked));
-    console.log(cardsInHand.search(locationAsked));
-    console.log(cardsInHand.indexOf(locationAsked));
     if (showPlayerName == "{{ session['players'][0] }}") {
         if (cardsInHand.includes(locationAsked)) {$("[name=cardShowedByMe]").append("<option>"+locationAsked+"</option>")};
         if (cardsInHand.includes(suspectAsked)) {$("[name=cardShowedByMe]").append("<option>"+suspectAsked+"</option>")};
