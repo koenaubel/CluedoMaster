@@ -57,7 +57,7 @@
                     <div id="suggestion">
                         <div class="form-group" id="playerturn">
                             <label>Player</label>
-                            <select class="form-control">
+                            <select class="form-control" name="turn_player">
                                 {% for player in session['players'] %}
                                     <option>{{ player }}</option>
                                 {% endfor %}
@@ -65,7 +65,7 @@
                         </div>
                         <div class="form-group" id="location">
                             <label>Location</label>
-                            <select class="form-control">
+                            <select class="form-control" name="cards_asked">
                                 {% for location in locations %}
                                     <option>{{ location }}</option>
                                 {% endfor %}
@@ -73,13 +73,13 @@
                         </div>
                         <div class="form-group" id="suspect">
                             <label>Suspect</label>
-                            <select class="form-control">
+                            <select class="form-control" name="cards_asked">
                                 {% for suspect in suspects %}
                                     <option>{{ suspect }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="form-group" id="weapon">
+                        <div class="form-group" id="weapon" name="cards_asked">
                             <label>Weapon</label>
                             <select class="form-control">
                                 {% for weapon in weapons %}
@@ -95,7 +95,7 @@
                             <select class="form-control" id="showPlayer">
                                 <option>Nobody</option>
                                 {% for player in session['players'] %}
-                                    <option>{{ player }}</option>
+                                    <option id="{{ player }}">{{ player }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -105,6 +105,12 @@
                                 {% for card in session['cards_in_hand'] %}
                                     <option>{{ card }}</option>
                                 {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group hideMe" id="showedToMe">
+                            <label>Which card did <span class="turnPlayerName"></span> show?</label>
+                            <select class="form-control">
+
                             </select>
                         </div>
                         <button type="submit" id="submitTurn" class="btn btn-primary float-right">Submit turn</button>
@@ -177,13 +183,19 @@
 
 $("#submitSuggestion").click(function (clickEvent) {
     clickEvent.preventDefault();
+    turnPlayerName = $("[name=turn_player]").val();
     $("#suggestion").hide();
     $("#showCard").show();
+    $('option[id="' + turnPlayerName + '"]').hide();
 });
 
 $("#showPlayer").change(function() {
-    player = $("#showPlayer").children("option").filter(":selected").text();
-    if (player == "{{ session['players'][0] }}") {$("#showedCard").show()};
+    showPlayerName = $("#showPlayer").children("option").filter(":selected").text();
+    turnPlayerName = $("[name=turn_player]").val();
+    if (showPlayerName == "{{ session['players'][0] }}") {$("#showedCard").show()};
+    if (turnPlayerName == "{{ session['players'][0] }}" && showPlayerName != "Nobody") {
+        $("#showedToMe").show();
+    };
 });
 
 $("#submitAccusation").click(function (clickEvent) {
