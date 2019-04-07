@@ -115,15 +115,65 @@
     </div>
 </div>
 
+<div class="modal fade" id="newAccusationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Make your accusation</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div id="accusation">
+                        <div class="form-group" id="locationAcc">
+                            <label>Location</label>
+                            <select class="form-control">
+                                {% for location in locations %}
+                                    <option>{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group" id="suspectAcc">
+                            <label>Suspect</label>
+                            <select class="form-control">
+                                {% for suspect in suspects %}
+                                    <option>{{ suspect }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group" id="weaponAcc">
+                            <label>Weapon</label>
+                            <select class="form-control">
+                                {% for weapon in weapons %}
+                                    <option>{{ weapon }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button id="submitAccusation" class="btn btn-primary float-right">Submit suggestion</button>
+                    </div>
+                    <div id="verify" class="hideMe">
+                        <h5>Was is right?</h5>
+                        <div class="d-flex justify-content-end">
+                            <button id="correct" class="btn btn-success mr-3">Yes!</button>
+                            <button id="incorret" class="btn btn-danger">Uuhhhh...</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-$(".list-group-item").click(function() {
-    isActive = $(this).hasClass("active")
-    if (isActive) {$(this).removeClass("active")}
-    else {
-    $(this).parent().children().removeClass("active");
-    $(this).addClass("active")}
-});
+<!--$(".list-group-item").click(function() {-->
+<!--    isActive = $(this).hasClass("active")-->
+<!--    if (isActive) {$(this).removeClass("active")}-->
+<!--    else {-->
+<!--    $(this).parent().children().removeClass("active");-->
+<!--    $(this).addClass("active")}-->
+<!--});-->
 
 $("#submitSuggestion").click(function (clickEvent) {
     clickEvent.preventDefault();
@@ -136,5 +186,12 @@ $("#showPlayer").change(function() {
     if (player == "{{ session['players'][0] }}") {$("#showedCard").show()};
 });
 
+$("#submitAccusation").click(function (clickEvent) {
+    clickEvent.preventDefault();
+    $("#accusation").hide();
+    $("#verify").show();
+});
+
 </script>
+
 {% endblock %}
