@@ -21,7 +21,7 @@ def home():
 @app.route('/select_cards', methods=('GET','POST'))
 def select_cards():
     if request.method == 'POST':
-        session['cards_in_hand'] = request.form.getlist('cards_in_hand')
+        session['cards_in_hand'] = request.form.get('cards_in_hand')
         print(session['cards_in_hand'])
         return redirect(url_for('cards'))
     return render_template('select_cards.html', locations=c.locations(),suspects=c.suspects(), weapons=c.weapons())

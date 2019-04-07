@@ -171,19 +171,19 @@
 <script>
 $("#submitSuggestion").click(function (clickEvent) {
     clickEvent.preventDefault();
-    turnPlayerName = $("[name=turn_player]").val();
+    var turnPlayerName = $("[name=turn_player]").val();
     $("#suggestion").hide();
     $("#showCard").show();
     $('option[id="' + turnPlayerName + '"]').hide();
 });
 
 $("[name=show_player]").change(function() {
-    showPlayerName = $("[name=show_player]").val();
-    turnPlayerName = $("[name=turn_player]").val();
-    locationAsked = $("[name=location_asked]").val();
-    suspectAsked = $("[name=suspect_asked]").val();
-    weaponAsked = $("[name=weapon_asked]").val();
-    cardsInHand = "{{ session['cards_in_hand'] }}";
+    var showPlayerName = $("[name=show_player]").val();
+    var turnPlayerName = $("[name=turn_player]").val();
+    var locationAsked = $("[name=location_asked]").val();
+    var suspectAsked = $("[name=suspect_asked]").val();
+    var weaponAsked = $("[name=weapon_asked]").val();
+    var cardsInHand = "{{ session['cards_in_hand'] }}";
     if (showPlayerName == "{{ session['players'][0] }}") {
         if (cardsInHand.includes(locationAsked)) {$("[name=cardShowedByMe]").append("<option>"+locationAsked+"</option>")};
         if (cardsInHand.includes(suspectAsked)) {$("[name=cardShowedByMe]").append("<option>"+suspectAsked+"</option>")};
@@ -192,11 +192,23 @@ $("[name=show_player]").change(function() {
     };
     if (turnPlayerName == "{{ session['players'][0] }}" && showPlayerName != "Nobody") {
         $(".showPlayerName").html(showPlayerName);
-        $("[name=cardShowedToMe]").append("<option>"+locationAsked+"</option>");
-        $("[name=cardShowedToMe]").append("<option>"+suspectAsked+"</option>");
-        $("[name=cardShowedToMe]").append("<option>"+weaponAsked+"</option>");
+        if (!cardsInHand.includes(locationAsked)) {$("[name=cardShowedToMe]").append("<option>"+locationAsked+"</option>")};
+        if (!cardsInHand.includes(suspectAsked)) {$("[name=cardShowedToMe]").append("<option>"+suspectAsked+"</option>")};
+        if (!cardsInHand.includes(weaponAsked)) {$("[name=cardShowedToMe]").append("<option>"+weaponAsked+"</option>")};
         $("#showedToMe").show();
     };
+});
+
+$("#submitTurn").click(function (clickEvent) {
+    var turnPlayerName = $("[name=turn_player]").val();
+    var locationAsked = $("[name=location_asked]").val();
+    var suspectAsked = $("[name=suspect_asked]").val();
+    var weaponAsked = $("[name=weapon_asked]").val();
+    var showPlayerName = $("[name=show_player]").val();
+    var cardShowedByMe = $("[name=cardShowedByMe]").val();
+    var cardShowedToMe = $("[name=cardShowedToMe]").val();
+    var data = [turnPlayerName, locationAsked, suspectAsked, weaponAsked, showPlayerName, cardShowedByMe, cardShowedToMe];
+    alert(data);
 });
 
 $("#submitAccusation").click(function (clickEvent) {

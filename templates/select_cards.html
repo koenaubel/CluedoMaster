@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% set active_page = "home" %}
+{% set post_url = url_for('select_cards') %}
 
 {% block content %}
 <div class="container mt-3">
@@ -12,91 +13,63 @@
     <form method="post">
         <div class="row">
             <div class="col-sm">
-                <fieldset class="form-group">
-                    <legend>Locations</legend>
+                <ul class="list-group" id="locations"><h4>Locations</h4>
                     {% for location in locations %}
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" name="cards_in_hand" type="checkbox" value="{{ location }}">
-                                {{ location }}
-                            </label>
-                        </div>
+                    <li class="d-flex flex-row list-group-item list-group-item-action">{{ location }}</li>
                     {% endfor %}
-                 </fieldset>
+                </ul>
             </div>
             <div class="col-sm">
-                <fieldset class="form-group">
-                    <legend>Suspects</legend>
+                <ul class="list-group" id="suspects"><h4>Suspects</h4>
                     {% for suspect in suspects %}
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" name="cards_in_hand" type="checkbox" value="{{ suspect }}">
-                                {{ suspect }}
-                            </label>
-                        </div>
+                    <li class="d-flex flex-row list-group-item list-group-item-action">{{ suspect }}</li>
                     {% endfor %}
-                 </fieldset>
+                </ul>
             </div>
             <div class="col-sm">
-                <fieldset class="form-group">
-                    <legend>Weapons</legend>
+                <ul class="list-group" id="weapons"><h4>Weapons</h4>
                     {% for weapon in weapons %}
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" name="cards_in_hand" type="checkbox" value="{{ weapon }}">
-                                {{ weapon }}
-                            </label>
-                        </div>
+                    <li class="d-flex flex-row list-group-item list-group-item-action">{{ weapon }}</li>
                     {% endfor %}
-                 </fieldset>
+                </ul>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-8">
-                <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to players</a>
-            </div>
-            <div class="col-sm-4">
-                <button type="submit" class="btn btn-primary">Start game</button>
-            </div>
+        <div class="row mt-3 d-flex justify-content-end">
+            <input type="hidden" id="startGame" name="cards_in_hand" value="">
+            <a href="{{ url_for('home') }}" class="btn btn-secondary mr-3">Back to players</a>
+            <button type="submit" class="btn btn-primary">Start game</button>
         </div>
     </form>
-    <div class="row hideMe">
-        <div class="col-sm">
-            <ul class="list-group" id="locations"><h3>Locations</h3>
-                {% for location in locations %}
-                <li class="d-flex flex-row list-group-item list-group-item-action justify-content-end align-items-center">
-                    {{ location }}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-sm">
-            <ul class="list-group" id="suspects"><h3>Suspects</h3>
-                {% for suspect in suspects %}
-                <li class="d-flex flex-row list-group-item list-group-item-action justify-content-end align-items-center">
-                    {{ suspect }}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-sm">
-            <ul class="list-group" id="weapons"><h3>Weapons</h3>
-                {% for weapon in weapons %}
-                <li class="d-flex flex-row list-group-item list-group-item-action justify-content-end align-items-center">
-                    {{ weapon }}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+
 </div>
 
 <script>
-$(".list-group-item").click(function() {
-    isActive = $(this).hasClass("active")
-    if (isActive) {$(this).removeClass("active")}
-    else {$(this).addClass("active")}
+$(document).ready(function(){
+    var cardsInHand = [];
+    $(".list-group-item").click(function() {
+        var isActive = $(this).hasClass("active");
+        var card = $(this).text();
+        if (isActive) {
+            $(this).removeClass("active");
+            var index = cardsInHand.indexOf(card);
+            cardsInHand.splice(index, 1);
+        }
+        else {
+            $(this).addClass("active");
+            cardsInHand.push(card);
+        };
+        console.log(cardsInHand);
+        $("#startGame").val(cardsInHand);
+    });
 });
-</script>
+
+<!--$("#startGame").click(function() {-->
+<!--    cardsInHand = [];-->
+<!--    $(".list-group-item.active").each(function() {-->
+<!--    cardsInHand.push($(this).text());-->
+<!--    });-->
+<!--    $.post("{{ url_for('select_cards') }}", cardsInHand);-->
+<!--});-->
+<!--</script>-->
 
 {% endblock %}
