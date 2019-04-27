@@ -199,17 +199,17 @@ $("[name=show_player]").change(function() {
     };
 });
 
-$("#submitTurn").click(function (clickEvent) {
-    var turnPlayerName = $("[name=turn_player]").val();
-    var locationAsked = $("[name=location_asked]").val();
-    var suspectAsked = $("[name=suspect_asked]").val();
-    var weaponAsked = $("[name=weapon_asked]").val();
-    var showPlayerName = $("[name=show_player]").val();
-    var cardShowedByMe = $("[name=cardShowedByMe]").val();
-    var cardShowedToMe = $("[name=cardShowedToMe]").val();
-    var data = [turnPlayerName, locationAsked, suspectAsked, weaponAsked, showPlayerName, cardShowedByMe, cardShowedToMe];
-    alert(data);
-});
+<!--$("#submitTurn").click(function (clickEvent) {-->
+<!--    var turnPlayerName = $("[name=turn_player]").val();-->
+<!--    var locationAsked = $("[name=location_asked]").val();-->
+<!--    var suspectAsked = $("[name=suspect_asked]").val();-->
+<!--    var weaponAsked = $("[name=weapon_asked]").val();-->
+<!--    var showPlayerName = $("[name=show_player]").val();-->
+<!--    var cardShowedByMe = $("[name=cardShowedByMe]").val();-->
+<!--    var cardShowedToMe = $("[name=cardShowedToMe]").val();-->
+<!--    var data = [turnPlayerName, locationAsked, suspectAsked, weaponAsked, showPlayerName, cardShowedByMe, cardShowedToMe];-->
+<!--    alert(data);-->
+<!--});-->
 
 $("#submitAccusation").click(function (clickEvent) {
     clickEvent.preventDefault();
