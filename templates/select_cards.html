@@ -58,18 +58,10 @@ $(document).ready(function(){
             $(this).addClass("active");
             cardsInHand.push(card);
         };
-        console.log(cardsInHand);
         $("#startGame").val(cardsInHand);
     });
 });
 
-<!--$("#startGame").click(function() {-->
-<!--    cardsInHand = [];-->
-<!--    $(".list-group-item.active").each(function() {-->
-<!--    cardsInHand.push($(this).text());-->
-<!--    });-->
-<!--    $.post("{{ url_for('select_cards') }}", cardsInHand);-->
-<!--});-->
-<!--</script>-->
+</script>
 
 {% endblock %}

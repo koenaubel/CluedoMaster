@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(16)
 
 
-@app.route('/', methods=('GET','POST'))
+@app.route('/', methods=('GET', 'POST'))
 def home():
     if request.method == 'POST':
         players = list()
@@ -18,13 +18,13 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/select_cards', methods=('GET','POST'))
+@app.route('/select_cards', methods=('GET', 'POST'))
 def select_cards():
     if request.method == 'POST':
         session['cards_in_hand'] = request.form.get('cards_in_hand')
         print(session['cards_in_hand'])
         return redirect(url_for('cards'))
-    return render_template('select_cards.html', locations=c.locations(),suspects=c.suspects(), weapons=c.weapons())
+    return render_template('select_cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
 
 
 @app.route('/turns')
@@ -32,9 +32,16 @@ def turns():
     return render_template('turns.html')
 
 
-@app.route('/cards')
+@app.route('/cards', methods=('GET', 'POST'))
 def cards():
-    return render_template('cards.html', locations=c.locations(),suspects=c.suspects(), weapons=c.weapons())
+    if request.method == 'POST':
+        if 'turn' not in session:
+            session['turn'] = list()
+        turn_list = session['turn']
+        turn_list.append(request.form)
+        session['turn'] = turn_list
+        return redirect(url_for('cards'))
+    return render_template('cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
 
 
 @app.route('/about')
