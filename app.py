@@ -22,13 +22,18 @@ def home():
 def select_cards():
     if request.method == 'POST':
         session['cards_in_hand'] = request.form.get('cards_in_hand')
-        print(session['cards_in_hand'])
         return redirect(url_for('cards'))
+    if 'players' not in session:
+        return redirect(url_for('home'))
     return render_template('select_cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
 
 
 @app.route('/turns')
 def turns():
+    if 'players' not in session:
+        return redirect(url_for('home'))
+    if 'cards_in_hand' not in session:
+        return redirect(url_for('select_cards'))
     return render_template('turns.html')
 
 
@@ -41,6 +46,10 @@ def cards():
         turn_list.append(request.form)
         session['turn'] = turn_list
         return redirect(url_for('cards'))
+    if 'players' not in session:
+        return redirect(url_for('home'))
+    if 'cards_in_hand' not in session:
+        return redirect(url_for('select_cards'))
     return render_template('cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
 
 

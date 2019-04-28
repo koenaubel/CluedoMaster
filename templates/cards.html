@@ -43,7 +43,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="newTurnModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="newTurnModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -117,7 +117,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="newAccusationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="newAccusationModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -198,18 +198,6 @@ $("[name=show_player]").change(function() {
         $("#showedToMe").show();
     };
 });
-
-<!--$("#submitTurn").click(function (clickEvent) {-->
-<!--    var turnPlayerName = $("[name=turn_player]").val();-->
-<!--    var locationAsked = $("[name=location_asked]").val();-->
-<!--    var suspectAsked = $("[name=suspect_asked]").val();-->
-<!--    var weaponAsked = $("[name=weapon_asked]").val();-->
-<!--    var showPlayerName = $("[name=show_player]").val();-->
-<!--    var cardShowedByMe = $("[name=cardShowedByMe]").val();-->
-<!--    var cardShowedToMe = $("[name=cardShowedToMe]").val();-->
-<!--    var data = [turnPlayerName, locationAsked, suspectAsked, weaponAsked, showPlayerName, cardShowedByMe, cardShowedToMe];-->
-<!--    alert(data);-->
-<!--});-->
 
 $("#submitAccusation").click(function (clickEvent) {
     clickEvent.preventDefault();
