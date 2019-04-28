@@ -1,0 +1,163 @@
+<div class="modal fade" id="newTurnModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">New suggestion</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div id="suggestion">
+                        <div class="form-group" id="playerturn">
+                            <label>Player</label>
+                            <select class="form-control" name="turn_player">
+                                {% for player in session['players'] %}
+                                    <option>{{ player }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <select class="form-control" name="location_asked">
+                                {% for location in locations %}
+                                    <option>{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group" >
+                            <label>Suspect</label>
+                            <select class="form-control" id="suspect" name="suspect_asked">
+                                {% for suspect in suspects %}
+                                    <option>{{ suspect }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Weapon</label>
+                            <select class="form-control" id="weapon" name="weapon_asked">
+                                {% for weapon in weapons %}
+                                    <option>{{ weapon }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button id="submitSuggestion" class="btn btn-primary float-right">Submit suggestion</button>
+                    </div>
+                    <div id="showCard" class="hideMe">
+                        <div class="form-group">
+                            <label>Which player showed a card?</label>
+                            <select class="form-control" name="show_player">
+                                <option>Nobody</option>
+                                {% for player in session['players'] %}
+                                    <option id="{{ player }}">{{ player }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group hideMe" id="showedCard">
+                            <label>Which card did you show?</label>
+                            <select class="form-control" name="cardShowedByMe">
+                            </select>
+                        </div>
+                        <div class="form-group hideMe" id="showedToMe">
+                            <label>Which card did <span class="showPlayerName"></span> show?</label>
+                            <select class="form-control" name="cardShowedToMe">
+                            </select>
+                        </div>
+                        <button type="submit" id="submitTurn" class="btn btn-primary float-right">Submit turn</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="newAccusationModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Make your accusation</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div id="accusation">
+                        <div class="form-group" id="locationAcc">
+                            <label>Location</label>
+                            <select class="form-control">
+                                {% for location in locations %}
+                                    <option>{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group" id="suspectAcc">
+                            <label>Suspect</label>
+                            <select class="form-control">
+                                {% for suspect in suspects %}
+                                    <option>{{ suspect }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group" id="weaponAcc">
+                            <label>Weapon</label>
+                            <select class="form-control">
+                                {% for weapon in weapons %}
+                                    <option>{{ weapon }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button id="submitAccusation" class="btn btn-primary float-right">Submit suggestion</button>
+                    </div>
+                    <div id="verify" class="hideMe">
+                        <h5>Was it right?</h5>
+                        <div class="d-flex justify-content-end">
+                            <button id="correct" class="btn btn-success mr-3">Yes!</button>
+                            <button id="incorret" class="btn btn-danger">Uuhhhh...</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$("#submitSuggestion").click(function (clickEvent) {
+    clickEvent.preventDefault();
+    var turnPlayerName = $("[name=turn_player]").val();
+    $("#suggestion").hide();
+    $("#showCard").show();
+    $('option[id="' + turnPlayerName + '"]').hide();
+});
+
+$("[name=show_player]").change(function() {
+    var showPlayerName = $("[name=show_player]").val();
+    var turnPlayerName = $("[name=turn_player]").val();
+    var locationAsked = $("[name=location_asked]").val();
+    var suspectAsked = $("[name=suspect_asked]").val();
+    var weaponAsked = $("[name=weapon_asked]").val();
+    var cardsInHand = "{{ session['cards_in_hand'] }}";
+    if (showPlayerName == "{{ session['players'][0] }}") {
+        if (cardsInHand.includes(locationAsked)) {$("[name=cardShowedByMe]").append("<option>"+locationAsked+"</option>")};
+        if (cardsInHand.includes(suspectAsked)) {$("[name=cardShowedByMe]").append("<option>"+suspectAsked+"</option>")};
+        if (cardsInHand.includes(weaponAsked)) {$("[name=cardShowedByMe]").append("<option>"+weaponAsked+"</option>")};
+        $("#showedCard").show();
+    };
+    if (turnPlayerName == "{{ session['players'][0] }}" && showPlayerName != "Nobody") {
+        $(".showPlayerName").html(showPlayerName);
+        if (!cardsInHand.includes(locationAsked)) {$("[name=cardShowedToMe]").append("<option>"+locationAsked+"</option>")};
+        if (!cardsInHand.includes(suspectAsked)) {$("[name=cardShowedToMe]").append("<option>"+suspectAsked+"</option>")};
+        if (!cardsInHand.includes(weaponAsked)) {$("[name=cardShowedToMe]").append("<option>"+weaponAsked+"</option>")};
+        $("#showedToMe").show();
+    };
+});
+
+$("#submitAccusation").click(function (clickEvent) {
+    clickEvent.preventDefault();
+    $("#accusation").hide();
+    $("#verify").show();
+});
+
+</script>

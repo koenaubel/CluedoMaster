@@ -5,58 +5,61 @@
 <div class="container mt-3">
     <h3>Turns</h3>
     {% if 'turn' is in session %}
-    {% for turn in session['turn'] %}
-    <div class="card my-3">
-        <div class="card-header d-flex flex-row justify-content-end align-items-center">
-            <span class="mr-auto h4">{{ loop.index }}. {{ turn['turn_player'] }}</span>
-            <span class="mx-1">
-            {{ turn['show_player'] }} showed
-            {% if 'cardShowedToMe' is in turn %}
-                the {{ turn['cardShowedToMe'] }}
-            {% elif 'cardShowedByMe' is in turn %}
-                {{ turn['cardShowedByMe'] }}
-            {% else %}
-                a card
-            {% endif %}
-        </span>
-        </div>
-        <div class="card-body row">
-            <div class="col-sm">
-                <li class="d-flex flex-row list-group-item list-group-item-action
-                    {% if turn['location_asked'] in session['cards_in_hand'] %}list-group-item-danger{% endif %}
-                    justify-content-end align-items-center">
-                    <img src="{{url_for('static', filename='location.png')}}" class="resize mr-2">
-                    <span class="mr-auto">{{ turn['location_asked'] }}</span>
-                    {% if turn['location_asked'] in session['cards_in_hand'] %}
-                    <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+        {% for turn in session['turn'] %}
+            <div class="card my-3">
+                <div class="card-header d-flex flex-row justify-content-end align-items-center">
+                    <span class="mr-auto h4">{{ loop.index }}. {{ turn['turn_player'] }}</span>
+                    <span class="mx-1">
+                    {{ turn['show_player'] }} showed
+                    {% if 'cardShowedToMe' is in turn %}
+                        the {{ turn['cardShowedToMe'] }}
+                    {% elif 'cardShowedByMe' is in turn %}
+                        {{ turn['cardShowedByMe'] }}
+                    {% else %}
+                        a card
                     {% endif %}
-                </li>
+                </span>
+                </div>
+                <div class="card-body row">
+                    <div class="col-sm">
+                        <li class="d-flex flex-row list-group-item list-group-item-action
+                            {% if turn['location_asked'] in session['cards_in_hand'] %}list-group-item-danger{% endif %}
+                            justify-content-end align-items-center">
+                            <img src="{{url_for('static', filename='location.png')}}" class="resize mr-2">
+                            <span class="mr-auto">{{ turn['location_asked'] }}</span>
+                            {% if turn['location_asked'] in session['cards_in_hand'] %}
+                            <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+                            {% endif %}
+                        </li>
+                    </div>
+                    <div class="col-sm">
+                        <li class="d-flex flex-row list-group-item list-group-item-action
+                            {% if turn['suspect_asked'] in session['cards_in_hand'] %}list-group-item-danger{% endif %}
+                            justify-content-end align-items-center">
+                            <img src="{{url_for('static', filename='suspect.png')}}" class="resize mr-2">
+                            <span class="mr-auto">{{ turn['suspect_asked'] }}</span>
+                            {% if turn['suspect_asked'] in session['cards_in_hand'] %}
+                            <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+                            {% endif %}
+                        </li>
+                    </div>
+                    <div class="col-sm">
+                        <li class="d-flex flex-row list-group-item list-group-item-action
+                            {% if turn['weapon_asked'] in session['cards_in_hand'] %}list-group-item-danger{% endif %}
+                            justify-content-end align-items-center">
+                            <img src="{{url_for('static', filename='weapon.png')}}" class="resize mr-2">
+                            <span class="mr-auto">{{ turn['weapon_asked'] }}</span>
+                            {% if turn['weapon_asked'] in session['cards_in_hand'] %}
+                            <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+                            {% endif %}
+                        </li>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm">
-                <li class="d-flex flex-row list-group-item list-group-item-action
-                    {% if turn['suspect_asked'] in session['cards_in_hand'] %}list-group-item-danger{% endif %}
-                    justify-content-end align-items-center">
-                    <img src="{{url_for('static', filename='suspect.png')}}" class="resize mr-2">
-                    <span class="mr-auto">{{ turn['suspect_asked'] }}</span>
-                    {% if turn['suspect_asked'] in session['cards_in_hand'] %}
-                    <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
-                    {% endif %}
-                </li>
-            </div>
-            <div class="col-sm">
-                <li class="d-flex flex-row list-group-item list-group-item-action
-                    {% if turn['weapon_asked'] in session['cards_in_hand'] %}list-group-item-danger{% endif %}
-                    justify-content-end align-items-center">
-                    <img src="{{url_for('static', filename='weapon.png')}}" class="resize mr-2">
-                    <span class="mr-auto">{{ turn['weapon_asked'] }}</span>
-                    {% if turn['weapon_asked'] in session['cards_in_hand'] %}
-                    <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
-                    {% endif %}
-                </li>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
     {% endif %}
 </div>
+
+{% include "modals.html" %}
+
 {% endblock %}

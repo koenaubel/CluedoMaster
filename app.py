@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from turn import add_turn
 import os
 import cards as c
 
@@ -8,6 +9,7 @@ app.secret_key = os.urandom(16)
 
 @app.route('/', methods=('GET', 'POST'))
 def home():
+    session.clear()
     if request.method == 'POST':
         players = list()
         for player in request.form.getlist('player'):
@@ -28,23 +30,21 @@ def select_cards():
     return render_template('select_cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
 
 
-@app.route('/turns')
+@app.route('/turns', methods=('GET', 'POST'))
 def turns():
+    if request.method == 'POST':
+        add_turn(request.form)
     if 'players' not in session:
         return redirect(url_for('home'))
     if 'cards_in_hand' not in session:
         return redirect(url_for('select_cards'))
-    return render_template('turns.html')
+    return render_template('turns.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
 
 
 @app.route('/cards', methods=('GET', 'POST'))
 def cards():
     if request.method == 'POST':
-        if 'turn' not in session:
-            session['turn'] = list()
-        turn_list = session['turn']
-        turn_list.append(request.form)
-        session['turn'] = turn_list
+        add_turn(request.form)
         return redirect(url_for('cards'))
     if 'players' not in session:
         return redirect(url_for('home'))
