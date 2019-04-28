@@ -3,6 +3,7 @@
 {% set active_page = "cards" %}
 
 {% block content %}
+
 <div class="container mt-3">
     <div class="row">
         <div class="col-sm">
@@ -11,7 +12,7 @@
                 <li class="d-flex flex-row list-group-item list-group-item-action {% if location in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
                     <span class="mr-auto">{{ location }}</span>
                     {% if location in session['cards_in_hand'] %}
-                        <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+                        <span class="badge badge-primary badge-pill mx-1">{{ session['cards_in_hand'][location] }}</span>
                     {% endif %}
                 </li>
                 {% endfor %}
@@ -23,7 +24,7 @@
                 <li class="d-flex flex-row list-group-item list-group-item-action {% if suspect in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
                     <span class="mr-auto">{{ suspect }}</span>
                     {% if suspect in session['cards_in_hand'] %}
-                        <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+                        <span class="badge badge-primary badge-pill mx-1">{{ session['cards_in_hand'][suspect] }}</span>
                     {% endif %}
                 </li>
                 {% endfor %}
@@ -35,7 +36,7 @@
                 <li class="d-flex flex-row list-group-item list-group-item-action {% if weapon in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
                     <span class="mr-auto">{{ weapon }}</span>
                     {% if weapon in session['cards_in_hand'] %}
-                        <span class="badge badge-primary badge-pill mx-1">{{ session['players'][0] }}</span>
+                        <span class="badge badge-primary badge-pill mx-1">{{ session['cards_in_hand'][weapon] }}</span>
                     {% endif %}
                 </li>
                 {% endfor %}
@@ -43,6 +44,7 @@
         </div>
     </div>
 </div>
+
 {% include "modals.html" %}
 
 {% endblock %}

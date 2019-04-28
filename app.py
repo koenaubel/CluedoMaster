@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from turn import add_turn
+from turn import add_turn, update_cards_in_hand
 import os
 import cards as c
 
@@ -23,7 +23,10 @@ def home():
 @app.route('/select_cards', methods=('GET', 'POST'))
 def select_cards():
     if request.method == 'POST':
-        session['cards_in_hand'] = request.form.get('cards_in_hand')
+        cards_in_hand = request.form.get('cards_in_hand')
+        cards_in_hand = cards_in_hand.split(",")
+        update_cards_in_hand(cards_in_hand, session['players'][0])
+        print(session)
         return redirect(url_for('cards'))
     if 'players' not in session:
         return redirect(url_for('home'))
