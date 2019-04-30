@@ -24,43 +24,19 @@
                 </div>
                 <div class="card-body row">
                     <div class="col-sm">
-                        <li class="d-flex flex-row list-group-item list-group-item-action
-                            {% if turn['location_asked'] in session['cards_in_hand'] %}list-group-item-danger{% endif %}
-                            justify-content-end align-items-center">
-                            <img src="{{url_for('static', filename='location.png')}}" class="resize mr-2">
-                            <span class="mr-auto">{{ turn['location_asked'] }}</span>
-                            {% if turn['location_asked'] in session['cards_in_hand'] %}
-                            <span class="badge badge-primary badge-pill mx-1">
-                                {{ session['cards_in_hand'][turn['location_asked']] }}
-                            </span>
-                            {% endif %}
-                        </li>
+                        {% set card = turn['location_asked'] %}
+                        {% set image = "location" %}
+                        {% include "list_item_card.html" %}
                     </div>
                     <div class="col-sm">
-                        <li class="d-flex flex-row list-group-item list-group-item-action
-                            {% if turn['suspect_asked'] in session['cards_in_hand'] %}list-group-item-danger{% endif %}
-                            justify-content-end align-items-center">
-                            <img src="{{url_for('static', filename='suspect.png')}}" class="resize mr-2">
-                            <span class="mr-auto">{{ turn['suspect_asked'] }}</span>
-                            {% if turn['suspect_asked'] in session['cards_in_hand'] %}
-                             <span class="badge badge-primary badge-pill mx-1">
-                                {{ session['cards_in_hand'][turn['suspect_asked']] }}
-                            </span>
-                            {% endif %}
-                        </li>
+                        {% set card = turn['suspect_asked'] %}
+                        {% set image = "suspect" %}
+                        {% include "list_item_card.html" %}
                     </div>
                     <div class="col-sm">
-                        <li class="d-flex flex-row list-group-item list-group-item-action
-                            {% if turn['weapon_asked'] in session['cards_in_hand'] %}list-group-item-danger{% endif %}
-                            justify-content-end align-items-center">
-                            <img src="{{url_for('static', filename='weapon.png')}}" class="resize mr-2">
-                            <span class="mr-auto">{{ turn['weapon_asked'] }}</span>
-                            {% if turn['weapon_asked'] in session['cards_in_hand'] %}
-                             <span class="badge badge-primary badge-pill mx-1">
-                                {{ session['cards_in_hand'][turn['weapon_asked']] }}
-                            </span>
-                            {% endif %}
-                        </li>
+                        {% set card = turn['weapon_asked'] %}
+                        {% set image = "weapon" %}
+                        {% include "list_item_card.html" %}
                     </div>
                 </div>
             </div>

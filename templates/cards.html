@@ -8,37 +8,22 @@
     <div class="row">
         <div class="col-sm">
             <ul class="list-group" id="locations"><h3>Locations</h3>
-                {% for location in locations %}
-                <li class="d-flex flex-row list-group-item list-group-item-action {% if location in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
-                    <span class="mr-auto">{{ location }}</span>
-                    {% if location in session['cards_in_hand'] %}
-                        <span class="badge badge-primary badge-pill mx-1">{{ session['cards_in_hand'][location] }}</span>
-                    {% endif %}
-                </li>
+                {% for card in locations %}
+                {% include "list_item_card.html" %}
                 {% endfor %}
             </ul>
         </div>
         <div class="col-sm">
             <ul class="list-group" id="suspects"><h3>Suspects</h3>
-                {% for suspect in suspects %}
-                <li class="d-flex flex-row list-group-item list-group-item-action {% if suspect in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
-                    <span class="mr-auto">{{ suspect }}</span>
-                    {% if suspect in session['cards_in_hand'] %}
-                        <span class="badge badge-primary badge-pill mx-1">{{ session['cards_in_hand'][suspect] }}</span>
-                    {% endif %}
-                </li>
+                {% for card in suspects %}
+                {% include "list_item_card.html" %}
                 {% endfor %}
             </ul>
         </div>
         <div class="col-sm">
             <ul class="list-group" id="weapons"><h3>Weapons</h3>
-                {% for weapon in weapons %}
-                <li class="d-flex flex-row list-group-item list-group-item-action {% if weapon in session['cards_in_hand'] %}list-group-item-danger{% endif %} justify-content-end align-items-center">
-                    <span class="mr-auto">{{ weapon }}</span>
-                    {% if weapon in session['cards_in_hand'] %}
-                        <span class="badge badge-primary badge-pill mx-1">{{ session['cards_in_hand'][weapon] }}</span>
-                    {% endif %}
-                </li>
+                {% for card in weapons %}
+                {% include "list_item_card.html" %}
                 {% endfor %}
             </ul>
         </div>
