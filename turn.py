@@ -39,6 +39,8 @@ def update_cards_in_hand(cards, player):
 
 
 def update_cards_not_in_hand(cards, player):
+    if 'players' not in session:
+        return
     players = session['players']
     if player == players[0]:
         return

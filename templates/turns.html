@@ -4,7 +4,6 @@
 {% block content %}
 
 <div class="container mt-3">
-    <h3>Turns</h3>
     {% if 'turn' is in session %}
         {% for turn in session['turn'] %}
             <div class="card my-3">
@@ -14,9 +13,11 @@
                         <img src="{{url_for('static', filename='showed_card.png')}}" class="resize mr-2">
                         {{ turn['show_player'] }} showed
                         {% if 'cardShowedToMe' is in turn %}
-                            the {{ turn['cardShowedToMe'] }}
+                            {% if turn['cardShowedToMe'] != turn['suspect_asked']%} the {% endif %}
+                            {{ turn['cardShowedToMe'] }}
                         {% elif 'cardShowedByMe' is in turn %}
-                            the {{ turn['cardShowedByMe'] }}
+                            {% if turn['cardShowedByMe'] != turn['suspect_asked']%} the {% endif %}
+                            {{ turn['cardShowedByMe'] }}
                         {% else %}
                             a card
                         {% endif %}
@@ -41,6 +42,13 @@
                 </div>
             </div>
         {% endfor %}
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            No turns yet.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
     {% endif %}
 </div>
 
