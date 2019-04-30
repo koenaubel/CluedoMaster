@@ -26,7 +26,6 @@ def select_cards():
         cards_in_hand = request.form.get('cards_in_hand')
         cards_in_hand = cards_in_hand.split(",")
         update_cards_in_hand(cards_in_hand, session['players'][0])
-        print(session)
         return redirect(url_for('cards'))
     if 'players' not in session:
         return redirect(url_for('home'))
