@@ -1,0 +1,39 @@
+{% macro card_list_item (card, image='') -%}
+    <li class="d-flex flex-row list-group-item list-group-item-action
+              {% if card in session['cards_in_hand'] %}list-group-item-danger{% endif %}
+              {% if card in session['solution'] %}list-group-item-success{% endif %}
+              justify-content-end align-items-center">
+        {% if image == "location" %}
+            <img src="{{url_for('static', filename='location.png')}}" class="resize mr-2">
+        {% elif image == "suspect" %}
+            <img src="{{url_for('static', filename='suspect.png')}}" class="resize mr-2">
+        {% elif image == "weapon" %}
+            <img src="{{url_for('static', filename='weapon.png')}}" class="resize mr-2">
+        {% endif %}
+        <span class="mr-auto">{{ card }}</span>
+        {% if card in session['cards_in_hand'] %}
+        <span class="badge badge-primary badge-pill mx-1">{{ session['cards_in_hand'][card] }}</span>
+        {% elif card in session['solution'] %}
+        <span class="badge badge-primary badge-pill mx-1">solution</span>
+        {% elif card in session['cards_not_in_hand'] %}
+        {% for player in session['cards_not_in_hand'][card] %}
+        <span class="badge badge-danger badge-pill mx-1">{{ player }}</span>
+        {% endfor %}
+        {% endif %}
+    </li>
+{%- endmacro %}
+
+{% macro found_cards_alert(found_cards) -%}
+    {% for card in found_cards %}
+        <div class="alert alert-success" role="alert">
+            {% if found_cards[card] == 'solution' %}
+                CluedoMaster found out that {{ card }} is in the solution.
+            {% else %}
+                CluedoMaster found out that {{ found_cards[card] }} has the {{ card }}.
+            {% endif %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+{%- endmacro %}

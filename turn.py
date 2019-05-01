@@ -7,6 +7,7 @@ def add_turn(turn_data):
     turn_list = session['turns']
     turn_list.append(turn_data)
     session['turns'] = turn_list
+    session['found_cards'] = dict()
 
     # Add showed card to cards_in_hand
     if "cardShowedToMe" in turn_data:
@@ -40,6 +41,8 @@ def update_cards_in_hand(cards, player):
         cards = [cards]
     for card in cards:
         session['cards_in_hand'][card] = player
+
+    # Add all other player (except oneself) to cards_not_in_hand
     other_players = session['players'].copy()
     other_players.pop(0)
     if player in other_players:
@@ -62,14 +65,17 @@ def update_cards_not_in_hand(cards, player):
         else:
             if player not in session['cards_not_in_hand'][card]:
                 session['cards_not_in_hand'][card].append(player)
-        if len(session['cards_not_in_hand'][card]) == len(players) - 1:
+        if len(session['cards_not_in_hand'][card]) == len(players) - 1 and card not in session['cards_in_hand']:
             update_solution(card)
 
 
 def update_solution(card):
+    found_card = dict()
     if 'solution' not in session:
         session['solution'] = list()
     session['solution'].append(card)
+    session['found_cards'][card] = 'solution'
+    return found_card
 
 
 def check_has_one_card(cards, player):
@@ -84,11 +90,11 @@ def check_has_one_card(cards, player):
             can_have_card = card
     if number_of_cards_not_in_hand == len(cards) - 1:
         return can_have_card
-    return None
 
 
 def check_all_turns():
     added_card = True
+    found_cards = dict()
     while added_card:
         added_card = False
         for turn in session['turns']:
@@ -98,4 +104,5 @@ def check_all_turns():
             if card is not None:
                 if card not in session['cards_in_hand']:
                     update_cards_in_hand(card, player)
+                    session['found_cards'][card] = player
                     added_card = True

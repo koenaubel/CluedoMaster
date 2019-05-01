@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% import "components.html" as comp %}
+
 {% set active_page = "turns" %}
 
 {% block content %}
 
 <div class="container mt-3">
+    {% if session['found_cards'] %}{{ comp.found_cards_alert(session['found_cards']) }}{% endif %}
     {% if 'turns' is in session %}
         {% for turn in session['turns'] %}
             <div class="card my-3">
@@ -25,19 +28,13 @@
                 </div>
                 <div class="card-body row">
                     <div class="col-sm">
-                        {% set card = turn['location_asked'] %}
-                        {% set image = "location" %}
-                        {% include "list_item_card.html" %}
+                        {{ comp.card_list_item(turn['location_asked'], "location") }}
                     </div>
                     <div class="col-sm">
-                        {% set card = turn['suspect_asked'] %}
-                        {% set image = "suspect" %}
-                        {% include "list_item_card.html" %}
+                        {{ comp.card_list_item(turn['suspect_asked'], "suspect") }}
                     </div>
                     <div class="col-sm">
-                        {% set card = turn['weapon_asked'] %}
-                        {% set image = "weapon" %}
-                        {% include "list_item_card.html" %}
+                        {{ comp.card_list_item(turn['weapon_asked'], "weapon") }}
                     </div>
                 </div>
             </div>

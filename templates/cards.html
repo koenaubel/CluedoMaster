@@ -1,29 +1,31 @@
 {% extends "base.html" %}
+{% import "components.html" as comp %}
 
 {% set active_page = "cards" %}
 
 {% block content %}
 
 <div class="container mt-3">
+    {% if session['found_cards'] %}{{ comp.found_cards_alert(session['found_cards']) }}{% endif %}
     <div class="row">
         <div class="col-sm">
             <ul class="list-group" id="locations"><h3>Locations</h3>
                 {% for card in locations %}
-                {% include "list_item_card.html" %}
+                    {{ comp.card_list_item(card) }}
                 {% endfor %}
             </ul>
         </div>
         <div class="col-sm">
             <ul class="list-group" id="suspects"><h3>Suspects</h3>
                 {% for card in suspects %}
-                {% include "list_item_card.html" %}
+                    {{ comp.card_list_item(card) }}
                 {% endfor %}
             </ul>
         </div>
         <div class="col-sm">
             <ul class="list-group" id="weapons"><h3>Weapons</h3>
                 {% for card in weapons %}
-                {% include "list_item_card.html" %}
+                    {{ comp.card_list_item(card) }}
                 {% endfor %}
             </ul>
         </div>

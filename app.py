@@ -25,6 +25,7 @@ def select_cards():
     if request.method == 'POST':
         cards_in_hand = request.form.get('cards_in_hand')
         cards_in_hand = cards_in_hand.split(",")
+        session['found_cards'] = dict()
         update_cards_in_hand(cards_in_hand, session['players'][0])
         return redirect(url_for('cards'))
     if 'players' not in session:
@@ -35,24 +36,29 @@ def select_cards():
 @app.route('/turns', methods=('GET', 'POST'))
 def turns():
     if request.method == 'POST':
-        add_turn(request.form)
+        found_cards = add_turn(request.form)
+    else:
+        found_cards = dict()
     if 'players' not in session:
         return redirect(url_for('home'))
     if 'cards_in_hand' not in session:
         return redirect(url_for('select_cards'))
-    return render_template('turns.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
+    return render_template('turns.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons(),
+                           found_cards=found_cards)
 
 
 @app.route('/cards', methods=('GET', 'POST'))
 def cards():
     if request.method == 'POST':
-        add_turn(request.form)
-        return redirect(url_for('cards'))
+        found_cards = add_turn(request.form)
+    else:
+        found_cards = dict()
     if 'players' not in session:
         return redirect(url_for('home'))
     if 'cards_in_hand' not in session:
         return redirect(url_for('select_cards'))
-    return render_template('cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
+    return render_template('cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons(),
+                           found_cards=found_cards)
 
 
 @app.route('/about')
