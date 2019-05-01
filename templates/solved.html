@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "components.html" as comp %}
+
+{% block content %}
+
+<div class="container mt-3">
+    <div class="card my-3">
+        <div class="card-header d-flex flex-row justify-content-end align-items-center">
+            <span class="mr-auto h4">CluedoMaster found the solution!</span>
+        </div>
+        <div class="card-body row">
+            <div class="col-sm">
+                {% for card in session['solution'] %}
+                    {% if card in locations %}
+                        {{ comp.card_list_item (card, image='location') }}
+                    {% elif card in suspects %}
+                        {{ comp.card_list_item (card, image='suspect') }}
+                    {% else %}
+                        {{ comp.card_list_item (card, image='weapon') }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'modals.html' %}
+
+{% endblock %}

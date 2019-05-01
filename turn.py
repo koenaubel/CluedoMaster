@@ -1,4 +1,5 @@
 from flask import session
+import cards as c
 
 
 def add_turn(turn_data):
@@ -22,6 +23,10 @@ def add_turn(turn_data):
 
     # Check every turn for cards we can know
     check_all_turns()
+    if len(session['solution']) == 3:
+        return True
+    else:
+        return False
 
 
 def next_player(player):
@@ -92,7 +97,6 @@ def check_has_one_card(cards, player):
 
 def check_all_turns():
     added_card = True
-    found_cards = dict()
     while added_card:
         added_card = False
         for turn in session['turns']:
@@ -104,3 +108,33 @@ def check_all_turns():
                     update_cards_in_hand(card, player)
                     session['found_cards'][card] = player
                     added_card = True
+        check_solution_cards()
+
+
+def check_solution_cards():
+    locations_in_hand = 0
+    for location in c.locations():
+        if location in session['cards_in_hand']:
+            locations_in_hand += 1
+        else:
+            card = location
+    if locations_in_hand == len(c.locations()) - 1:
+        update_solution(card)
+    suspects_in_hand = 0
+    for suspect in c.suspects():
+        if suspect in session['cards_in_hand']:
+            suspects_in_hand += 1
+        else:
+            card = suspect
+    if suspects_in_hand == len(c.suspects()) - 1:
+        update_solution(card)
+    weapons_in_hand = 0
+    for weapon in c.weapons():
+        if weapon in session['cards_in_hand']:
+            weapons_in_hand += 1
+        else:
+            card = weapon
+    if weapons_in_hand == len(c.weapons()) - 1:
+        update_solution(card)
+
+

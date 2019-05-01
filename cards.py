@@ -11,18 +11,18 @@ def locations():
     db = get_db()
     result = pd.read_sql('SELECT * FROM Location', db)['Name']
     db.close()
-    return result
+    return result.to_list()
 
 
 def suspects():
     db = get_db()
     result = pd.read_sql('SELECT * FROM Suspect', db)['Name']
     db.close()
-    return result
+    return result.to_list()
 
 
 def weapons():
     db = get_db()
     result = pd.read_sql('SELECT * FROM Weapon', db)['Name']
     db.close()
-    return result
+    return result.to_list()
