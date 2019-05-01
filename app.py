@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash, get_flashed_messages
 from turn import add_turn, update_cards_in_hand, check_solution_cards
 import os
 import cards as c
@@ -15,6 +15,9 @@ def home():
         for player in request.form.getlist('player'):
             if player != "":
                 players.append(player)
+        if not players:
+            flash("First enter the player's names.")
+            return redirect(url_for('home'))
         session['players'] = players
         return redirect(url_for('select_cards'))
     return render_template('home.html')
@@ -24,6 +27,9 @@ def home():
 def select_cards():
     if request.method == 'POST':
         cards_in_hand = request.form.get('cards_in_hand')
+        if not cards_in_hand:
+            flash("First select the cards you have in your hand.")
+            return redirect(url_for('select_cards'))
         cards_in_hand = cards_in_hand.split(",")
         session['found_cards'] = dict()
         update_cards_in_hand(cards_in_hand, session['players'][0])
@@ -57,8 +63,6 @@ def cards():
         return redirect(url_for('home'))
     if 'cards_in_hand' not in session:
         return redirect(url_for('select_cards'))
-    locations = c.locations()
-    print(locations)
     return render_template('cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
 
 
