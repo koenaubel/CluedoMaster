@@ -70,12 +70,10 @@ def update_cards_not_in_hand(cards, player):
 
 
 def update_solution(card):
-    found_card = dict()
     if 'solution' not in session:
         session['solution'] = list()
     session['solution'].append(card)
     session['found_cards'][card] = 'solution'
-    return found_card
 
 
 def check_has_one_card(cards, player):

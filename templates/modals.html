@@ -14,7 +14,7 @@
                             <label>Player</label>
                             <select class="form-control" name="turn_player">
                                 {% for player in session['players'] %}
-                                    <option>{{ player }}</option>
+                                <option>{{ player }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -22,15 +22,15 @@
                             <label>Location</label>
                             <select class="form-control" name="location_asked">
                                 {% for location in locations %}
-                                    <option>{{ location }}</option>
+                                <option>{{ location }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label>Suspect</label>
                             <select class="form-control" id="suspect" name="suspect_asked">
                                 {% for suspect in suspects %}
-                                    <option>{{ suspect }}</option>
+                                <option>{{ suspect }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -38,7 +38,7 @@
                             <label>Weapon</label>
                             <select class="form-control" id="weapon" name="weapon_asked">
                                 {% for weapon in weapons %}
-                                    <option>{{ weapon }}</option>
+                                <option>{{ weapon }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -50,7 +50,7 @@
                             <select class="form-control" name="show_player">
                                 <option>Nobody</option>
                                 {% for player in session['players'] %}
-                                    <option id="{{ player }}">{{ player }}</option>
+                                <option id="{{ player }}">{{ player }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -88,7 +88,7 @@
                             <label>Location</label>
                             <select class="form-control">
                                 {% for location in locations %}
-                                    <option>{{ location }}</option>
+                                <option>{{ location }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -96,7 +96,7 @@
                             <label>Suspect</label>
                             <select class="form-control">
                                 {% for suspect in suspects %}
-                                    <option>{{ suspect }}</option>
+                                <option>{{ suspect }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -104,7 +104,7 @@
                             <label>Weapon</label>
                             <select class="form-control">
                                 {% for weapon in weapons %}
-                                    <option>{{ weapon }}</option>
+                                <option>{{ weapon }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -114,13 +114,33 @@
                         <h5>Was it right?</h5>
                         <div class="d-flex justify-content-end">
                             <button id="correct" class="btn btn-success mr-3">Yes!</button>
-                            <button id="incorret" class="btn btn-danger">Uuhhhh...</button>
+                            <button id="incorrect" class="btn btn-danger">Uuhhhh...</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="solutionFound" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Solution found!</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success mr-3">Yes!</button
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 
 <script>
@@ -159,5 +179,6 @@ $("#submitAccusation").click(function (clickEvent) {
     $("#accusation").hide();
     $("#verify").show();
 });
+
 
 </script>
