@@ -23,8 +23,9 @@ def add_turn(turn_data):
 
     # Check every turn for cards we can know
     check_all_turns()
-    if len(session['solution']) == 3:
-        return True
+    if 'solution' in session:
+        if len(session['solution']) == 3:
+            return True
     else:
         return False
 
@@ -84,13 +85,14 @@ def update_solution(card):
 def check_has_one_card(cards, player):
     number_of_cards_not_in_hand = 0
     for card in cards:
-        if card in session['cards_not_in_hand']:
-            if player in session['cards_not_in_hand'][card]:
-                number_of_cards_not_in_hand += 1
+        if 'cards_not_in_hand' in session:
+            if card in session['cards_not_in_hand']:
+                if player in session['cards_not_in_hand'][card]:
+                    number_of_cards_not_in_hand += 1
+                else:
+                    can_have_card = card
             else:
                 can_have_card = card
-        else:
-            can_have_card = card
     if number_of_cards_not_in_hand == len(cards) - 1:
         return can_have_card
 

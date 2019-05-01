@@ -9,8 +9,8 @@ app.secret_key = os.urandom(16)
 
 @app.route('/', methods=('GET', 'POST'))
 def home():
-    session.clear()
     if request.method == 'POST':
+        session.clear()
         players = list()
         for player in request.form.getlist('player'):
             if player != "":
