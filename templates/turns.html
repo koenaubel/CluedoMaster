@@ -4,8 +4,8 @@
 {% block content %}
 
 <div class="container mt-3">
-    {% if 'turn' is in session %}
-        {% for turn in session['turn'] %}
+    {% if 'turns' is in session %}
+        {% for turn in session['turns'] %}
             <div class="card my-3">
                 <div class="card-header d-flex flex-row justify-content-end align-items-center">
                     <span class="mr-auto h4">{{ loop.index }}. {{ turn['turn_player'] }}</span>
