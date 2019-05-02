@@ -47,6 +47,11 @@ def update_cards_in_hand(cards, player):
         cards = [cards]
     for card in cards:
         session['cards_in_hand'][card] = player
+    session['cards_in_my_hand'] = list()
+    for card in session['cards_in_hand']:
+        if session['cards_in_hand'][card] == session['players'][0]:
+            session['cards_in_my_hand'].append(card)
+    print(session['cards_in_my_hand'])
 
     # Add all other player (except oneself) to cards_not_in_hand
     other_players = session['players'].copy()
@@ -138,5 +143,3 @@ def check_solution_cards():
             card = weapon
     if weapons_in_hand == len(c.weapons()) - 1:
         update_solution(card)
-
-

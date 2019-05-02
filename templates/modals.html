@@ -45,6 +45,7 @@
                         <button id="submitSuggestion" class="btn btn-primary float-right">Submit suggestion</button>
                     </div>
                     <div id="showCard" class="hideMe">
+                        <div class="summary"></div><br>
                         <div class="form-group">
                             <label>Which player showed a card?</label>
                             <select class="form-control" name="show_player">
@@ -54,6 +55,7 @@
                                 {% endfor %}
                             </select>
                         </div>
+                        <div id="noCard" class="hideMe">You have no cards to show</div>
                         <div class="form-group hideMe" id="showedCard">
                             <label>Which card did you show?</label>
                             <select class="form-control" name="cardShowedByMe">
@@ -127,8 +129,12 @@
 $("#submitSuggestion").click(function (clickEvent) {
     clickEvent.preventDefault();
     var turnPlayerName = $("[name=turn_player]").val();
+    var locationAsked = $("[name=location_asked]").val();
+    var suspectAsked = $("[name=suspect_asked]").val();
+    var weaponAsked = $("[name=weapon_asked]").val();
     $("#suggestion").hide();
     $("#showCard").show();
+    $(".summary").html(turnPlayerName + ' asked ' + locationAsked + ', ' + suspectAsked + ' and ' + weaponAsked);
     $('option[id="' + turnPlayerName + '"]').hide();
 });
 
@@ -139,11 +145,25 @@ $("[name=show_player]").change(function() {
     var suspectAsked = $("[name=suspect_asked]").val();
     var weaponAsked = $("[name=weapon_asked]").val();
     var cardsInHand = "{{ session['cards_in_hand'] }}";
+    var cardsInMyHand = "{{ session['cards_in_my_hand'] }}";
+
     if (showPlayerName == "{{ session['players'][0] }}") {
-        if (cardsInHand.includes(locationAsked)) {$("[name=cardShowedByMe]").append("<option>"+locationAsked+"</option>")};
-        if (cardsInHand.includes(suspectAsked)) {$("[name=cardShowedByMe]").append("<option>"+suspectAsked+"</option>")};
-        if (cardsInHand.includes(weaponAsked)) {$("[name=cardShowedByMe]").append("<option>"+weaponAsked+"</option>")};
-        $("#showedCard").show();
+        var hasCard = false;
+        if (cardsInMyHand.includes(locationAsked)) {$("[name=cardShowedByMe]").append("<option>"+locationAsked+"</option>"); hasCard = true};
+        if (cardsInMyHand.includes(suspectAsked)) {$("[name=cardShowedByMe]").append("<option>"+suspectAsked+"</option>"); hasCard = true};
+        if (cardsInMyHand.includes(weaponAsked)) {$("[name=cardShowedByMe]").append("<option>"+weaponAsked+"</option>"); hasCard = true};
+        console.log(hasCard)
+        if (hasCard) {$("#showedCard").show();}
+            else {
+                $("#noCard").show();
+                $("#submitTurn").attr("disabled", true);
+            }
+    }
+    else {
+        $("#showedCard").hide();
+        $("#noCard").hide();
+        $("[name=cardShowedByMe]").val("");
+        $("#submitTurn").attr("disabled", false);
     };
     if (turnPlayerName == "{{ session['players'][0] }}" && showPlayerName != "Nobody") {
         $(".showPlayerName").html(showPlayerName);
