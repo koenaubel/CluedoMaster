@@ -37,3 +37,16 @@
         </div>
     {% endfor %}
 {%- endmacro %}
+
+{% macro card_dropdown(card) -%}
+    <option>
+        {{ card }}
+        {% if card in session['cards_in_my_hand'] %}
+            (you)
+        {% elif card in session['cards_in_hand'] %}
+            ({{session['cards_in_hand'][card]}})
+        {% elif card in session['solution'] %}
+            (solution)
+        {% endif %}
+    </option>
+{%- endmacro %}

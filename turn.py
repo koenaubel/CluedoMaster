@@ -3,6 +3,14 @@ import cards as c
 
 
 def add_turn(turn_data):
+    turn_data = dict(turn_data)
+    turn_data['location_asked'] = turn_data['location_asked'].split(" ")[0]
+    turn_data['suspect_asked'] = turn_data['suspect_asked'].split(" ")[0]
+    turn_data['weapon_asked'] = turn_data['weapon_asked'].split(" ")[0]
+    if 'cardShowedToMe' in turn_data:
+        turn_data['cardShowedToMe'] = turn_data['cardShowedToMe'].split(" ")[0]
+    if 'cardShowedByMe' in turn_data:
+        turn_data['cardShowedByMe'] = turn_data['cardShowedByMe'].split(" ")[0]
     if 'turns' not in session:
         session['turns'] = list()
     turn_list = session['turns']
@@ -51,7 +59,6 @@ def update_cards_in_hand(cards, player):
     for card in session['cards_in_hand']:
         if session['cards_in_hand'][card] == session['players'][0]:
             session['cards_in_my_hand'].append(card)
-    print(session['cards_in_my_hand'])
 
     # Add all other player (except oneself) to cards_not_in_hand
     other_players = session['players'].copy()

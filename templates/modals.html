@@ -1,3 +1,5 @@
+{% import "components.html" as comp %}
+
 <div class="modal fade" id="newTurnModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -22,7 +24,7 @@
                             <label>Location</label>
                             <select class="form-control" name="location_asked">
                                 {% for location in locations %}
-                                <option>{{ location }}</option>
+                                    {{ comp.card_dropdown(location) }}
                                 {% endfor %}
                             </select>
                         </div>
@@ -30,7 +32,7 @@
                             <label>Suspect</label>
                             <select class="form-control" id="suspect" name="suspect_asked">
                                 {% for suspect in suspects %}
-                                <option>{{ suspect }}</option>
+                                    {{ comp.card_dropdown(suspect) }}
                                 {% endfor %}
                             </select>
                         </div>
@@ -38,7 +40,7 @@
                             <label>Weapon</label>
                             <select class="form-control" id="weapon" name="weapon_asked">
                                 {% for weapon in weapons %}
-                                <option>{{ weapon }}</option>
+                                    {{ comp.card_dropdown(weapon) }}
                                 {% endfor %}
                             </select>
                         </div>
@@ -129,21 +131,24 @@
 $("#submitSuggestion").click(function (clickEvent) {
     clickEvent.preventDefault();
     var turnPlayerName = $("[name=turn_player]").val();
-    var locationAsked = $("[name=location_asked]").val();
-    var suspectAsked = $("[name=suspect_asked]").val();
-    var weaponAsked = $("[name=weapon_asked]").val();
+    var locationAsked = $("[name=location_asked]").val().split(" ")[0];
+    var suspectAsked = $("[name=suspect_asked]").val().split(" ")[0];
+    var weaponAsked = $("[name=weapon_asked]").val().split(" ")[0];
     $("#suggestion").hide();
     $("#showCard").show();
-    $(".summary").html(turnPlayerName + ' asked ' + locationAsked + ', ' + suspectAsked + ' and ' + weaponAsked);
+    if (turnPlayerName == "{{ session['players'][0] }}") {
+    $(".summary").html('You asked ' + locationAsked + ', ' + suspectAsked + ' and ' + weaponAsked);}
+        else {$(".summary").html(turnPlayerName + ' asked ' + locationAsked + ', ' + suspectAsked + ' and ' + weaponAsked);
+        }
     $('option[id="' + turnPlayerName + '"]').hide();
 });
 
 $("[name=show_player]").change(function() {
     var showPlayerName = $("[name=show_player]").val();
     var turnPlayerName = $("[name=turn_player]").val();
-    var locationAsked = $("[name=location_asked]").val();
-    var suspectAsked = $("[name=suspect_asked]").val();
-    var weaponAsked = $("[name=weapon_asked]").val();
+    var locationAsked = $("[name=location_asked]").val().split(" ")[0];
+    var suspectAsked = $("[name=suspect_asked]").val().split(" ")[0];
+    var weaponAsked = $("[name=weapon_asked]").val().split(" ")[0];
     var cardsInHand = "{{ session['cards_in_hand'] }}";
     var cardsInMyHand = "{{ session['cards_in_my_hand'] }}";
 
@@ -152,7 +157,6 @@ $("[name=show_player]").change(function() {
         if (cardsInMyHand.includes(locationAsked)) {$("[name=cardShowedByMe]").append("<option>"+locationAsked+"</option>"); hasCard = true};
         if (cardsInMyHand.includes(suspectAsked)) {$("[name=cardShowedByMe]").append("<option>"+suspectAsked+"</option>"); hasCard = true};
         if (cardsInMyHand.includes(weaponAsked)) {$("[name=cardShowedByMe]").append("<option>"+weaponAsked+"</option>"); hasCard = true};
-        console.log(hasCard)
         if (hasCard) {$("#showedCard").show();}
             else {
                 $("#noCard").show();
@@ -165,12 +169,18 @@ $("[name=show_player]").change(function() {
         $("[name=cardShowedByMe]").val("");
         $("#submitTurn").attr("disabled", false);
     };
+
     if (turnPlayerName == "{{ session['players'][0] }}" && showPlayerName != "Nobody") {
         $(".showPlayerName").html(showPlayerName);
-        if (!cardsInHand.includes(locationAsked)) {$("[name=cardShowedToMe]").append("<option>"+locationAsked+"</option>")};
-        if (!cardsInHand.includes(suspectAsked)) {$("[name=cardShowedToMe]").append("<option>"+suspectAsked+"</option>")};
-        if (!cardsInHand.includes(weaponAsked)) {$("[name=cardShowedToMe]").append("<option>"+weaponAsked+"</option>")};
+        if (!cardsInMyHand.includes(locationAsked)) {$("[name=cardShowedToMe]").append("<option>"+locationAsked+"</option>")};
+        if (!cardsInMyHand.includes(suspectAsked)) {$("[name=cardShowedToMe]").append("<option>"+suspectAsked+"</option>")};
+        if (!cardsInMyHand.includes(weaponAsked)) {$("[name=cardShowedToMe]").append("<option>"+weaponAsked+"</option>")};
         $("#showedToMe").show();
+    };
+    if (turnPlayerName == "{{ session['players'][0] }}" && showPlayerName == "Nobody") {
+        $("#showedToMe").hide();
+        $("[name=cardShowedToMe]").val("");
+        $("[name=cardShowedToMe] option").remove();
     };
 });
 
