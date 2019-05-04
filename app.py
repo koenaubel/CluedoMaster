@@ -4,7 +4,7 @@ import os
 import cards as c
 
 app = Flask(__name__)
-app.secret_key = os.urandom(16)
+app.secret_key = b'%%\x14\xb82\xf6\xf9\xb2f\x91L+\xc1\xea\x7fs'
 
 
 @app.route('/', methods=('GET', 'POST'))
