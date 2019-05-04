@@ -47,30 +47,30 @@
   </div>
 </nav>
 
-<!--{% if active_page != 'home' %}-->
-<!--    <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary d-sm-none">-->
-<!--        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newTurnModal">-->
-<!--            New suggestion-->
-<!--        </button>-->
-<!--        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#newAccusationModal">-->
-<!--            Make accusation-->
-<!--        </button>-->
-<!--    </nav>-->
-<!--{% endif %}-->
+{% if active_page != 'home' %}
+    <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary d-sm-none">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newTurnModal">
+            New suggestion
+        </button>
+        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#newAccusationModal">
+            Make accusation
+        </button>
+    </nav>
+{% endif %}
 
-<!--<div class="container mt-3">-->
-<!--{% with messages = get_flashed_messages() %}-->
-<!--  {% if messages %}-->
-<!--    {% for message in messages %}-->
-<!--      <div class="alert alert-warning" role="alert">-->
-<!--          {{ message }}-->
-<!--          <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
-<!--              <span aria-hidden="true">&times;</span>-->
-<!--          </button>-->
-<!--      </div>-->
-<!--    {% endfor %}-->
-<!--  {% endif %}-->
-<!--{% endwith %}-->
-<!--</div>-->
+<div class="container mt-3">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-warning" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+</div>
 
 {% block content %}{% endblock %}
