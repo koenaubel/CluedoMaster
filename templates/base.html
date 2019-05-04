@@ -3,8 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel ="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link rel ="stylesheet" href="{{ url_for('static', filename='cards.css') }}">
-    <link rel ="stylesheet" href="{{ url_for('static', filename='modal.css') }}">
+    <link rel ="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -13,7 +12,7 @@
     <title>CluedoMaster</title>
 </head>
 
-{% set nav_bar = [('cards','Cards'),('turns','Turns'),('about','About')] %}
+{% set nav_bar = [('cards','Cards'),('turns','Turns')] %}
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="{{ url_for('home') }}">
@@ -30,9 +29,13 @@
                 <a class="nav-link" href="{{ url_for(url) }}">{{ nav_text }}</a>
             </li>
         {% endfor %}
+        <li class="nav-item ">
+            <a class="nav-link d-sm-none" href="{{ url_for('home') }}">Start new game</a>
+        </li>
+
     </ul>
     {% if active_page != 'home' %}
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0 d-none d-sm-block">
         <button type="button" class="btn btn-secondary mr-4" data-toggle="modal" data-target="#newTurnModal">
             New suggestion
         </button>
@@ -44,6 +47,17 @@
     {% endif %}
   </div>
 </nav>
+
+{% if active_page != 'home' %}
+    <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary d-sm-none">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#newTurnModal">
+            New suggestion
+        </button>
+        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#newAccusationModal">
+            Make accusation
+        </button>
+    </nav>
+{% endif %}
 
 <div class="container mt-3">
 {% with messages = get_flashed_messages() %}

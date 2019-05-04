@@ -19,10 +19,23 @@
                             <input class="form-control" name="player" placeholder="Enter {% if i == 1 %}your name{% else %}name of player {{ i }}{% endif %}">
                         </div>
                     {% endfor %}
+<!--                    <div class="row mt-3 d-flex justify-content-between mx-2 mb-3">-->
                     <button type="submit" class="btn btn-primary">Next</button>
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready( function() {
+    if ( $(window).width() < 576) {
+        $(".btn").addClass('btn-block');
+    }
+    else {
+        $(".btn").addClass('btn-fixed-width float-right');
+    }
+    });
+</script>
+
 {% endblock %}

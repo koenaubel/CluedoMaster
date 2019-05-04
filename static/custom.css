@@ -1,0 +1,16 @@
+html {
+    margin-bottom: 65px;
+}
+
+.hideMe {
+    display: none;
+}
+
+img.resize {
+  width: 25px;
+  height: 25px;
+}
+
+.btn-fixed-width {
+    width: 150px;
+}

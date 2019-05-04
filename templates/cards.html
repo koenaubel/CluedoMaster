@@ -8,21 +8,21 @@
 <div class="container mt-3">
     {% if session['found_cards'] %}{{ comp.found_cards_alert(session['found_cards']) }}{% endif %}
     <div class="row">
-        <div class="col-sm">
+        <div class="col-sm mb-3">
             <ul class="list-group" id="locations"><h3>Locations</h3>
                 {% for card in locations %}
                     {{ comp.card_list_item(card) }}
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-sm">
+        <div class="col-sm mb-3">
             <ul class="list-group" id="suspects"><h3>Suspects</h3>
                 {% for card in suspects %}
                     {{ comp.card_list_item(card) }}
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-sm">
+        <div class="col-sm mb-3">
             <ul class="list-group" id="weapons"><h3>Weapons</h3>
                 {% for card in weapons %}
                     {{ comp.card_list_item(card) }}
