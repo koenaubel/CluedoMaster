@@ -26,6 +26,11 @@
 {% macro found_cards_alert(found_cards) -%}
     {% for card in found_cards %}
         <div class="alert alert-success" role="alert">
+            <div class="alert-header">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             {% if found_cards[card] == 'solution' %}
                 CluedoMaster found out that {{ card }} is in the solution.
             {% else %}
