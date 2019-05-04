@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="container mt-3">
+<div class="container mt-3 pb-5 mb-5">
     {% if session['found_cards'] %}{{ comp.found_cards_alert(session['found_cards']) }}{% endif %}
     {% if 'turns' is in session %}
         {% for turn in session['turns'] %}
