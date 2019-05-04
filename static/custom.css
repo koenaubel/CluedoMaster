@@ -2,7 +2,6 @@ body {
 padding-bottom: 70px;
 }
 
-
 img.resize {
   width: 25px;
   height: 25px;
@@ -11,3 +10,4 @@ img.resize {
 .btn-fixed-width {
     width: 150px;
 }
+
