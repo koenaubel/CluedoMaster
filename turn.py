@@ -127,26 +127,26 @@ def check_all_turns():
 
 def check_solution_cards():
     locations_in_hand = 0
-    for location in c.locations():
+    for location in c.LOCATIONS:
         if location in session['cards_in_hand']:
             locations_in_hand += 1
         else:
             card = location
-    if locations_in_hand == len(c.locations()) - 1:
+    if locations_in_hand == len(c.LOCATIONS) - 1:
         update_solution(card)
     suspects_in_hand = 0
-    for suspect in c.suspects():
+    for suspect in c.SUSPECTS:
         if suspect in session['cards_in_hand']:
             suspects_in_hand += 1
         else:
             card = suspect
-    if suspects_in_hand == len(c.suspects()) - 1:
+    if suspects_in_hand == len(c.SUSPECTS) - 1:
         update_solution(card)
     weapons_in_hand = 0
-    for weapon in c.weapons():
+    for weapon in c.WEAPONS:
         if weapon in session['cards_in_hand']:
             weapons_in_hand += 1
         else:
             card = weapon
-    if weapons_in_hand == len(c.weapons()) - 1:
+    if weapons_in_hand == len(c.WEAPONS) - 1:
         update_solution(card)

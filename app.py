@@ -37,7 +37,7 @@ def select_cards():
         return redirect(url_for('cards'))
     if 'players' not in session:
         return redirect(url_for('home'))
-    return render_template('select_cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
+    return render_template('select_cards.html', locations=c.LOCATIONS, suspects=c.SUSPECTS, weapons=c.WEAPONS)
 
 
 @app.route('/turns', methods=('GET', 'POST'))
@@ -50,7 +50,7 @@ def turns():
         return redirect(url_for('home'))
     if 'cards_in_hand' not in session:
         return redirect(url_for('select_cards'))
-    return render_template('turns.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
+    return render_template('turns.html', locations=c.LOCATIONS, suspects=c.SUSPECTS, weapons=c.WEAPONS)
 
 
 @app.route('/cards', methods=('GET', 'POST'))
@@ -63,12 +63,12 @@ def cards():
         return redirect(url_for('home'))
     if 'cards_in_hand' not in session:
         return redirect(url_for('select_cards'))
-    return render_template('cards.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
+    return render_template('cards.html', locations=c.LOCATIONS, suspects=c.SUSPECTS, weapons=c.WEAPONS)
 
 
 @app.route('/solved')
 def solved():
-    return render_template('solved.html', locations=c.locations(), suspects=c.suspects(), weapons=c.weapons())
+    return render_template('solved.html', locations=c.LOCATIONS, suspects=c.SUSPECTS, weapons=c.WEAPONS)
 
 
 @app.route('/about')
