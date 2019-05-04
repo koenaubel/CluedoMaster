@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, get_flashed_messages
 from turn import add_turn, update_cards_in_hand, check_solution_cards
-import os
 import cards as c
 
 app = Flask(__name__)
