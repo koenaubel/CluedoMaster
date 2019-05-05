@@ -68,7 +68,10 @@
                             <select class="form-control" name="cardShowedToMe">
                             </select>
                         </div>
-                        <button type="submit" id="submitTurn" class="btn btn-primary float-right">Submit turn</button>
+                        <div class="row d-flex justify-content-between mx-1">
+                            <button id="prevScreen" class="btn btn-secondary btn-fixed-width">Back</button>
+                            <button type="submit" id="submitTurn" class="btn btn-primary btn-fixed-width">Submit turn</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -80,7 +83,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Make your accusation</h3>
+                <h3 class="modal-title">Accusation</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -88,25 +91,25 @@
             <div class="modal-body">
                 <form>
                     <div id="accusation">
-                        <div class="form-group" id="locationAcc">
+                        <div class="form-group">
                             <label>Location</label>
-                            <select class="form-control">
+                            <select class="form-control" name="locationAcc">
                                 {% for location in locations %}
                                 <option {% if location in session["solution"] %}selected{% endif %}>{{ location }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="form-group" id="suspectAcc">
+                        <div class="form-group">
                             <label>Suspect</label>
-                            <select class="form-control">
+                            <select class="form-control" name="suspectAcc">
                                 {% for suspect in suspects %}
                                 <option {% if suspect in session["solution"] %}selected{% endif %}>{{ suspect }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="form-group" id="weaponAcc">
+                        <div class="form-group">
                             <label>Weapon</label>
-                            <select class="form-control">
+                            <select class="form-control" name="weaponAcc">
                                 {% for weapon in weapons %}
                                 <option {% if weapon in session["solution"] %}selected{% endif %}>{{ weapon }}</option>
                                 {% endfor %}
@@ -115,10 +118,11 @@
                         <button id="submitAccusation" class="btn btn-primary float-right">Submit accusation</button>
                     </div>
                     <div id="verify" class="hideMe">
-                        <h5>Was it right?</h5>
-                        <div class="d-flex justify-content-end">
-                            <button id="correct" class="btn btn-success mr-3">Yes!</button>
-                            <button id="incorrect" class="btn btn-danger">Uuhhhh...</button>
+                        <div class="accSummary"></div>
+                        <p>Was that right?</p>
+                        <div class="row d-flex justify-content-between mx-1">
+                            <button id="incorrect" class="btn btn-danger btn-fixed-width">Uuhhhh...</button>
+                            <button id="correct" class="btn btn-success btn-fixed-width">Yes!</button>
                         </div>
                     </div>
                 </form>
@@ -131,16 +135,31 @@
 $("#submitSuggestion").click(function (clickEvent) {
     clickEvent.preventDefault();
     var turnPlayerName = $("[name=turn_player]").val();
-    var locationAsked = $("[name=location_asked]").val().split(" ")[0];
-    var suspectAsked = $("[name=suspect_asked]").val().split(" ")[0];
-    var weaponAsked = $("[name=weapon_asked]").val().split(" ")[0];
+    var locationAsked = $("[name=location_asked]").val();
+    var suspectAsked = $("[name=suspect_asked]").val();
+    var weaponAsked = $("[name=weapon_asked]").val();
     $("#suggestion").hide();
     $("#showCard").show();
     if (turnPlayerName == "{{ session['players'][0] }}") {
-    $(".summary").html('You asked ' + locationAsked + ', ' + suspectAsked + ' and ' + weaponAsked);}
-        else {$(".summary").html(turnPlayerName + ' asked ' + locationAsked + ', ' + suspectAsked + ' and ' + weaponAsked);
+    $(".summary").html('You asked ' + locationAsked + ', ' + suspectAsked + ' and ' + weaponAsked + '.');}
+        else {$(".summary").html(turnPlayerName + ' asked ' + locationAsked + ', ' + suspectAsked + ' and ' + weaponAsked + '.');
         }
     $('option[id="' + turnPlayerName + '"]').detach();
+});
+
+$("#prevScreen").click(function (clickEvent) {
+    clickEvent.preventDefault();
+    var turnPlayerName = $("[name=turn_player]").val();
+    $("[name=show_player]").append("<option id=turnPlayerName>"+turnPlayerName+"</option>")
+    $("#showCard").hide();
+    $("#suggestion").show();
+    $("[name=cardShowedToMe]").val("");
+    $("[name=cardShowedToMe] option").remove();
+    $("[name=cardShowedByMe]").val("");
+    $("[name=cardShowedByMe] option").remove();
+    $("[name=show_player]").val("Nobody");
+    $("#showedCard").hide();
+    $("#showedToMe").hide();
 });
 
 $("[name=show_player]").change(function() {
@@ -186,7 +205,11 @@ $("[name=show_player]").change(function() {
 
 $("#submitAccusation").click(function (clickEvent) {
     clickEvent.preventDefault();
+    var locationAcc = $("[name=locationAcc]").val();
+    var suspectAcc = $("[name=suspectAcc]").val();
+    var weaponAcc = $("[name=weaponAcc]").val();
     $("#accusation").hide();
+    $(".accSummary").html('You asked ' + locationAcc + ', ' + suspectAcc + ' and ' + weaponAcc + '.');
     $("#verify").show();
 });
 

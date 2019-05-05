@@ -3,11 +3,14 @@ padding-bottom: 70px;
 }
 
 img.resize {
-  width: 25px;
-  height: 25px;
+width: 25px;
+height: 25px;
 }
 
 .btn-fixed-width {
-    width: 150px;
+width: 150px;
 }
 
+.hideMe{
+display: none;
+}
