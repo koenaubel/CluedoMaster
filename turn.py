@@ -90,8 +90,9 @@ def update_cards_not_in_hand(cards, player):
 def update_solution(card):
     if 'solution' not in session:
         session['solution'] = list()
-    session['solution'].append(card)
-    session['found_cards'][card] = 'solution'
+    if card not in session['solution']:
+        session['solution'].append(card)
+        session['found_cards'][card] = 'solution'
 
 
 def check_has_one_card(cards, player):

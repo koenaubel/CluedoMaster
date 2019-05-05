@@ -170,6 +170,7 @@ $("[name=show_player]").change(function() {
     var weaponAsked = $("[name=weapon_asked]").val().split(" (")[0];
     var cardsInHand = "{{ session['cards_in_hand'] }}";
     var cardsInMyHand = "{{ session['cards_in_my_hand'] }}";
+    var solution = "{{ session['solution'] }}";
 
     if (showPlayerName == "{{ session['players'][0] }}") {
         var hasCard = false;
@@ -191,9 +192,15 @@ $("[name=show_player]").change(function() {
 
     if (turnPlayerName == "{{ session['players'][0] }}" && showPlayerName != "Nobody") {
         $(".showPlayerName").html(showPlayerName);
-        if (!cardsInMyHand.includes(locationAsked)) {$("[name=cardShowedToMe]").append("<option>"+locationAsked+"</option>")};
-        if (!cardsInMyHand.includes(suspectAsked)) {$("[name=cardShowedToMe]").append("<option>"+suspectAsked+"</option>")};
-        if (!cardsInMyHand.includes(weaponAsked)) {$("[name=cardShowedToMe]").append("<option>"+weaponAsked+"</option>")};
+        if (!cardsInMyHand.includes(locationAsked) && !solution.includes(locationAsked)) {
+            $("[name=cardShowedToMe]").append("<option>"+locationAsked+"</option>")
+        };
+        if (!cardsInMyHand.includes(suspectAsked) && !solution.includes(suspectAsked)) {
+            $("[name=cardShowedToMe]").append("<option>"+suspectAsked+"</option>")
+        };
+        if (!cardsInMyHand.includes(weaponAsked) && !solution.includes(weaponAsked)) {
+            $("[name=cardShowedToMe]").append("<option>"+weaponAsked+"</option>")
+        };
         $("#showedToMe").show();
     };
     if (turnPlayerName == "{{ session['players'][0] }}" && showPlayerName == "Nobody") {
