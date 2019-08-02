@@ -27,11 +27,11 @@
     <ul class="navbar-nav mr-auto">
         {% for url, nav_text in nav_bar %}
             <li class="nav-item {% if active_page == url %}active{% endif %}">
-                <a class="nav-link" href="{{ url_for(url) }}">{{ nav_text }}</a>
+                <a class="nav-link" href="/{{url}}">{{ nav_text }}</a>
             </li>
         {% endfor %}
         <li class="nav-item ">
-            <a class="nav-link d-sm-none" href="{{ url_for('home') }}">Start new game</a>
+            <a class="nav-link d-sm-none" href="/">Start new game</a>
         </li>
 
     </ul>
@@ -43,7 +43,7 @@
         <button type="button" class="btn btn-success mr-4" data-toggle="modal" data-target="#newAccusationModal">
             Make accusation
         </button>
-        <a class="btn btn-warning my-2 my-sm-0 max-4" href="{{ url_for('home') }}">Start new game</a>
+        <a class="btn btn-warning my-2 my-sm-0 max-4" href="/">Start new game</a>
     </form>
     {% endif %}
   </div>
